@@ -3,8 +3,8 @@ import Navbar from '@/components/nav'
 import PostTile from '@/components/post-tile'
 import { Footer } from '@/components/footer'
 import { Eyebrow } from '@/components/redesign/eyebrow'
+import { TagPill } from '@/components/redesign/tag-pill'
 import { Posts } from '@/lib/posts'
-import { toggleTagHref } from '@/lib/tag-filter-url'
 import { type PostExcerpt } from '@/lib/types'
 import {
     BLOG_URL,
@@ -113,22 +113,9 @@ export default function BlogHome({
                         aria-label="filter by tag"
                         className="mt-6 flex flex-wrap gap-2"
                     >
-                        {allTags.map((tag) => {
-                            const isActive = activeSet.has(tag.toLowerCase())
-                            return (
-                                <Link
-                                    key={tag}
-                                    href={toggleTagHref(tag, activeTags)}
-                                    className={`rd-chip transition-colors ${
-                                        isActive
-                                            ? 'border-[var(--rd-accent)] bg-[var(--rd-accent-bg)] text-[var(--rd-accent-ink)]'
-                                            : 'hover:border-[var(--rd-accent)] hover:text-[var(--rd-accent-ink)]'
-                                    }`}
-                                >
-                                    #{tag}
-                                </Link>
-                            )
-                        })}
+                        {allTags.map((tag) => (
+                            <TagPill key={tag} name={tag} activeTags={activeTags} />
+                        ))}
                         {activeTags.length > 0 && (
                             <Link
                                 href="/"
