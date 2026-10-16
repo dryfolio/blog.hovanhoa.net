@@ -1,19 +1,27 @@
-export type TagCategory = 'engineering' | 'ai' | 'life'
+export type TagColor =
+    | 'blue'
+    | 'teal'
+    | 'indigo'
+    | 'amber'
+    | 'orange'
+    | 'violet'
+    | 'green'
+    | 'pink'
 
-// Maps every tag currently in use to a category color bucket (see the
+// Maps every tag currently in use to a pastel pill color (see the
 // --rd-label-* tokens in globals.css). New tags must be added here —
-// unrecognized tags silently fall back to 'engineering'.
-const TAG_CATEGORY: Record<string, TagCategory> = {
-    'system design': 'engineering',
-    golang: 'engineering',
-    'distributed systems': 'engineering',
-    concurrency: 'engineering',
-    'ci-cd': 'engineering',
-    testing: 'engineering',
-    'ai agents': 'ai',
-    life: 'life',
+// unrecognized tags silently fall back to 'blue'.
+const TAG_COLOR: Record<string, TagColor> = {
+    'system design': 'blue',
+    golang: 'teal',
+    'distributed systems': 'indigo',
+    concurrency: 'amber',
+    'ci-cd': 'orange',
+    testing: 'violet',
+    'ai agents': 'green',
+    life: 'pink',
 }
 
-export function categoryFor(tagName: string): TagCategory {
-    return TAG_CATEGORY[tagName.toLowerCase()] ?? 'engineering'
+export function categoryFor(tagName: string): TagColor {
+    return TAG_COLOR[tagName.toLowerCase()] ?? 'blue'
 }

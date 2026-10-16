@@ -3,9 +3,14 @@ import { categoryFor } from '@/lib/tag-categories'
 import { toggleTagHref } from '@/lib/tag-filter-url'
 
 const CATEGORY_VARS: Record<string, { bg: string; fg: string }> = {
-    engineering: { bg: 'var(--rd-label-slate)', fg: 'var(--rd-label-slate-fg)' },
-    ai: { bg: 'var(--rd-label-pine)', fg: 'var(--rd-label-pine-fg)' },
-    life: { bg: 'var(--rd-label-plum)', fg: 'var(--rd-label-plum-fg)' },
+    blue: { bg: 'var(--rd-label-blue)', fg: 'var(--rd-label-blue-fg)' },
+    teal: { bg: 'var(--rd-label-teal)', fg: 'var(--rd-label-teal-fg)' },
+    indigo: { bg: 'var(--rd-label-indigo)', fg: 'var(--rd-label-indigo-fg)' },
+    amber: { bg: 'var(--rd-label-amber)', fg: 'var(--rd-label-amber-fg)' },
+    orange: { bg: 'var(--rd-label-orange)', fg: 'var(--rd-label-orange-fg)' },
+    violet: { bg: 'var(--rd-label-violet)', fg: 'var(--rd-label-violet-fg)' },
+    green: { bg: 'var(--rd-label-green)', fg: 'var(--rd-label-green-fg)' },
+    pink: { bg: 'var(--rd-label-pink)', fg: 'var(--rd-label-pink-fg)' },
 }
 
 export function TagPill({
@@ -15,7 +20,7 @@ export function TagPill({
     name: string
     activeTags?: string[]
 }) {
-    const { bg, fg } = CATEGORY_VARS[categoryFor(name)]
+    const { bg, fg } = CATEGORY_VARS[categoryFor(name)] ?? CATEGORY_VARS.blue
     const isActive = activeTags.some(
         (t) => t.toLowerCase() === name.toLowerCase()
     )
