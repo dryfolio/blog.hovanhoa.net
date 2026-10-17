@@ -76,9 +76,6 @@ export function Footer() {
                             <span className="text-[var(--rd-accent)]">
                                 .net
                             </span>
-                            <span className="ml-2 align-middle font-[family-name:var(--font-mono)] text-sm font-normal text-[var(--rd-text-3)]">
-                                /blog
-                            </span>
                         </Link>
                         <p className="rd-lead mt-4">
                             notes on backend systems, distributed systems, and
