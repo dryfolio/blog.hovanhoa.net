@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import formatDate from '@/lib/format-date'
 import { TagPill } from '@/components/redesign/tag-pill'
@@ -13,7 +14,7 @@ export function PostRow({
     activeTags?: string[]
 }) {
     return (
-        <article className="group relative grid gap-x-8 gap-y-2 border-b border-[var(--rd-line)] px-[clamp(1rem,2.5vw,1.5rem)] py-[1.15rem] transition-colors last:border-b-0 hover:bg-[var(--rd-surface-2)] min-[720px]:grid-cols-[9.5rem_minmax(0,1fr)]">
+        <article className="group relative grid gap-x-8 gap-y-2 border-b border-[var(--rd-line)] px-[clamp(1rem,2.5vw,1.5rem)] py-[1.15rem] transition-colors last:border-b-0 hover:bg-[var(--rd-surface-2)] min-[720px]:grid-cols-[9.5rem_minmax(0,1fr)_9rem]">
             <time
                 dateTime={post.publishedAt}
                 className="pt-[0.2rem] font-[family-name:var(--font-mono)] text-[0.72rem] text-[var(--rd-text-3)]"
@@ -47,6 +48,17 @@ export function PostRow({
                     </span>
                 </div>
             </div>
+            {post.coverImage.url && (
+                <div className="relative hidden aspect-[16/10] self-start overflow-hidden rounded-[var(--rd-r-sm)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)] min-[720px]:block">
+                    <Image
+                        src={post.coverImage.url}
+                        alt=""
+                        fill
+                        sizes="144px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                    />
+                </div>
+            )}
         </article>
     )
 }

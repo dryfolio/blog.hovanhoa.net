@@ -9,6 +9,16 @@ import GithubSlugger from 'github-slugger'
 import type { Post, PostExcerpt, TableOfContent, Tag } from './types'
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
+const COVERS_DIR = path.join(process.cwd(), 'public', 'covers')
+
+// A post's own coverImage wins; otherwise fall back to the generated cover
+// from scripts/generate-covers.mjs, if one exists.
+function coverFor(slug: string, data: Frontmatter): string {
+    if (data.coverImage) return data.coverImage
+    return fs.existsSync(path.join(COVERS_DIR, `${slug}.webp`))
+        ? `/covers/${slug}.webp`
+        : ''
+}
 
 type Frontmatter = {
     title: string
@@ -65,7 +75,7 @@ function toExcerpt(post: ParsedPost): PostExcerpt {
         tags: toTags(data.tags),
         publishedAt: data.publishedAt,
         updatedAt: data.updatedAt,
-        coverImage: { url: data.coverImage ?? '' },
+        coverImage: { url: coverFor(slug, data) },
         readTimeInMinutes: calculateReadTimeInMinutes(post.body),
     }
 }
@@ -178,7 +188,7 @@ export const Posts = {
             content: { html },
             tags: toTags(parsed.data.tags),
             publishedAt: parsed.data.publishedAt,
-            coverImage: { url: parsed.data.coverImage ?? '' },
+            coverImage: { url: coverFor(slug, parsed.data) },
             readTimeInMinutes: calculateReadTimeInMinutes(parsed.body),
             features: {
                 tableOfContents: {

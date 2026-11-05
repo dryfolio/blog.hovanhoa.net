@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { BLOG_URL, NAME, FULL_NAME } from '@/constants'
 import formatDate from '@/lib/format-date'
@@ -30,7 +31,7 @@ export async function generateMetadata({
     }
 
     const ogImage =
-        post?.coverImage?.url ||
+        (post?.coverImage?.url?.startsWith('http') && post.coverImage.url) ||
         `${BLOG_URL}/api/og?title=${encodeURIComponent(`${NAME} | ${post.title.toLowerCase()}`)}`
 
     return {
@@ -102,7 +103,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             datePublished: post.publishedAt,
                             dateModified: post.publishedAt,
                             description: post.brief,
-                            image: post?.coverImage?.url,
+                            image: post.coverImage.url.startsWith('/')
+                                ? `${BLOG_URL}${post.coverImage.url}`
+                                : post.coverImage.url || undefined,
                             url: `${BLOG_URL}/${slug}`,
                             author: {
                                 '@type': 'Person',
@@ -144,6 +147,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             </div>
                         )}
                     </header>
+                    {post.coverImage.url && (
+                        <div className="relative mt-[clamp(1.75rem,3.5vw,2.5rem)] aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
+                            <Image
+                                src={post.coverImage.url}
+                                alt=""
+                                fill
+                                priority
+                                sizes="(min-width: 1120px) 1008px, 100vw"
+                                className="object-cover"
+                            />
+                        </div>
+                    )}
                     <div className="mt-[clamp(2rem,4vw,3rem)] max-w-[68ch] border-t border-[var(--rd-line)] pt-[clamp(1.5rem,3vw,2.25rem)]">
                         <ArticleContent content={post.content.html} />
                     </div>
