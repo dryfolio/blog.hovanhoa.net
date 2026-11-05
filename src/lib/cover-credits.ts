@@ -1,5 +1,6 @@
-// Who took each fallback cover in public/covers/<slug>.jpg, shown under the
-// article hero. CC BY / BY-SA photos must keep their credit and license.
+// The artwork behind each fallback cover in public/covers/<slug>.jpg, shown
+// under the article hero. All are public domain; most come from the Art
+// Institute of Chicago's open-access (CC0) collection.
 export type CoverCredit = {
     title: string
     author: string
@@ -10,80 +11,79 @@ export type CoverCredit = {
 
 export const COVER_CREDITS: Record<string, CoverCredit> = {
     'thundering-herd-in-distributed-systems': {
-        title: 'Wildebeests migration crossing',
-        author: 'Naturaltracksafaris',
-        license: 'CC BY-SA 4.0, resized',
-        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
-        source: 'https://commons.wikimedia.org/wiki/File:Wildebeests_migration_crossing.jpg',
-    },
-    'why-i-chose-twitter-snowflake-id': {
-        title: 'Snow Flake',
-        author: 'Macro Mama',
+        title: 'Under the Wave off Kanagawa, also known as The Great Wave',
+        author: 'Katsushika Hokusai, 1830/33',
         license: 'CC0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/snow-flake-DPPBWTSVDN',
+        source: 'https://www.artic.edu/artworks/24645',
     },
     'cap-theorem-in-distributed-systems': {
-        title: 'Network Cable',
-        author: 'Lenharth Systems',
+        title: 'Sudden Shower over Shin Ohashi Bridge and Atake',
+        author: 'Utagawa Hiroshige, 1857',
         license: 'CC0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/network-cable-KNXOKCUSCK',
-    },
-    'go-concurrency-goroutines-channels': {
-        title: 'Dark Night',
-        author: 'Caleb George',
-        license: 'CC0',
-        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/dark-night-08770132A3',
-    },
-    'building-a-url-shortener-service-using-golang': {
-        title: 'Chain Rusty',
-        author: 'Fré Sonneveld',
-        license: 'CC0',
-        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/chain-rusty-MYIW7G9AXA',
-    },
-    'building-an-ai-agent-in-go': {
-        title: 'Robot Technology',
-        author: 'Alex Knight',
-        license: 'CC0',
-        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/robot-technology-WUBMLJRYEK',
-    },
-    'jenkins-cicd-on-aws-ec2': {
-        title: 'Industrial piping system, factory pipes',
-        author: 'U.S. Army',
-        license: 'CC0',
-        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://www.rawpixel.com/image/10995767/industrial-piping-system-factory-pipes',
-    },
-    'live-reload-in-go-with-air': {
-        title: 'Free hot air balloon dawn',
-        author: '',
-        license: 'CC0',
-        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://www.rawpixel.com/image/5907319/photo-image-public-domain-free-travel',
+        source: 'https://www.artic.edu/artworks/64447',
     },
     'load-testing-k6-search-optimization': {
-        title: 'Free car speedometer 100 image',
-        author: '',
+        title: 'Awa Province: Naruto Whirlpools',
+        author: 'Utagawa Hiroshige, 1855',
         license: 'CC0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://www.rawpixel.com/image/5908631/photo-image-background-public-domain-free',
+        source: 'https://www.artic.edu/artworks/130577',
     },
-    'looking-back-at-2024': {
-        title: 'Sunrise Trees',
-        author: 'Glen Carrie',
+    'live-reload-in-go-with-air': {
+        title: 'Ejiri in Suruga Province',
+        author: 'Katsushika Hokusai, c. 1830/33',
         license: 'CC0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://stocksnap.io/photo/sunrise-trees-47DD83C293',
+        source: 'https://www.artic.edu/artworks/24800',
+    },
+    'go-concurrency-goroutines-channels': {
+        title: 'Paris Street; Rainy Day',
+        author: 'Gustave Caillebotte, 1877',
+        license: 'CC0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        source: 'https://www.artic.edu/artworks/20684',
     },
     '2025-rewind': {
-        title: 'Ma Pi Leng, Vietnam landscape',
-        author: '',
+        title: 'Arrival of the Normandy Train, Gare Saint-Lazare',
+        author: 'Claude Monet, 1877',
         license: 'CC0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        source: 'https://www.rawpixel.com/image/3305131/free-photo-image-cc0-cliff-countryside',
+        source: 'https://www.artic.edu/artworks/16571',
+    },
+    'looking-back-at-2024': {
+        title: 'Snow at Louveciennes',
+        author: 'Camille Pissarro, c. 1870',
+        license: 'CC0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        source: 'https://www.artic.edu/artworks/45838',
+    },
+    'building-an-ai-agent-in-go': {
+        title: 'Improvisation No. 30',
+        author: 'Vasily Kandinsky, 1913',
+        license: 'CC0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        source: 'https://www.artic.edu/artworks/8991',
+    },
+    'building-a-url-shortener-service-using-golang': {
+        title: 'Painting with Green Center',
+        author: 'Vasily Kandinsky, 1913',
+        license: 'CC0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        source: 'https://www.artic.edu/artworks/8987',
+    },
+    'jenkins-cicd-on-aws-ec2': {
+        title: 'Composition Gray-Red',
+        author: 'Piet Mondrian, 1935',
+        license: 'CC0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        source: 'https://www.artic.edu/artworks/65821',
+    },
+    'why-i-chose-twitter-snowflake-id': {
+        title: 'Snowflakes',
+        author: 'Wilson Bentley, c. 1902',
+        license: 'Public domain',
+        source: 'https://commons.wikimedia.org/wiki/File:SnowflakesWilsonBentley.jpg',
     },
 }

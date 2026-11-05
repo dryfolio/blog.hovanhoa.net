@@ -164,7 +164,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             {credit &&
                                 post.coverImage.url.startsWith('/covers/') && (
                                     <figcaption className="mt-2 font-[family-name:var(--font-mono)] text-[0.7rem] text-[var(--rd-text-3)]">
-                                        Photo:{' '}
+                                        Cover:{' '}
                                         <a
                                             href={credit.source}
                                             target="_blank"
