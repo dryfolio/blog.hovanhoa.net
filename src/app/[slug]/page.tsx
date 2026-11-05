@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { BLOG_URL, NAME, FULL_NAME } from '@/constants'
+import { COVER_CREDITS } from '@/lib/cover-credits'
 import formatDate from '@/lib/format-date'
 import { type Tag, type Post } from '@/lib/types'
 import React from 'react'
@@ -85,6 +86,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         return <NotFound />
     }
 
+    const credit = COVER_CREDITS[slug]
     const morePosts = Posts.getAllSummaries()
         .filter((p) => p.slug !== slug)
         .slice(0, 3)
@@ -148,16 +150,47 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         )}
                     </header>
                     {post.coverImage.url && (
-                        <div className="relative mt-[clamp(1.75rem,3.5vw,2.5rem)] aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
-                            <Image
-                                src={post.coverImage.url}
-                                alt=""
-                                fill
-                                priority
-                                sizes="(min-width: 1120px) 1008px, 100vw"
-                                className="object-cover"
-                            />
-                        </div>
+                        <figure className="m-0 mt-[clamp(1.75rem,3.5vw,2.5rem)]">
+                            <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
+                                <Image
+                                    src={post.coverImage.url}
+                                    alt=""
+                                    fill
+                                    priority
+                                    sizes="(min-width: 1120px) 1008px, 100vw"
+                                    className="object-cover"
+                                />
+                            </div>
+                            {credit &&
+                                post.coverImage.url.startsWith('/covers/') && (
+                                    <figcaption className="mt-2 font-[family-name:var(--font-mono)] text-[0.7rem] text-[var(--rd-text-3)]">
+                                        Photo:{' '}
+                                        <a
+                                            href={credit.source}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="underline decoration-[var(--rd-border-2)] underline-offset-2 hover:text-[var(--rd-text-2)]"
+                                        >
+                                            {credit.title}
+                                        </a>
+                                        {credit.author &&
+                                            ` by ${credit.author}`}{' '}
+                                        ·{' '}
+                                        {credit.licenseUrl ? (
+                                            <a
+                                                href={credit.licenseUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="underline decoration-[var(--rd-border-2)] underline-offset-2 hover:text-[var(--rd-text-2)]"
+                                            >
+                                                {credit.license}
+                                            </a>
+                                        ) : (
+                                            credit.license
+                                        )}
+                                    </figcaption>
+                                )}
+                        </figure>
                     )}
                     <div className="mt-[clamp(2rem,4vw,3rem)] max-w-[68ch] border-t border-[var(--rd-line)] pt-[clamp(1.5rem,3vw,2.25rem)]">
                         <ArticleContent content={post.content.html} />

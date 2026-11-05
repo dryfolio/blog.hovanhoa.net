@@ -11,12 +11,12 @@ import type { Post, PostExcerpt, TableOfContent, Tag } from './types'
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
 const COVERS_DIR = path.join(process.cwd(), 'public', 'covers')
 
-// A post's own coverImage wins; otherwise fall back to the generated cover
-// from scripts/generate-covers.mjs, if one exists.
+// A post's own coverImage wins; otherwise fall back to the photo in
+// public/covers/<slug>.jpg, if one exists (credits in src/lib/cover-credits.ts).
 function coverFor(slug: string, data: Frontmatter): string {
     if (data.coverImage) return data.coverImage
-    return fs.existsSync(path.join(COVERS_DIR, `${slug}.webp`))
-        ? `/covers/${slug}.webp`
+    return fs.existsSync(path.join(COVERS_DIR, `${slug}.jpg`))
+        ? `/covers/${slug}.jpg`
         : ''
 }
 

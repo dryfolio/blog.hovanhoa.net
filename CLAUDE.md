@@ -38,6 +38,7 @@ Tailwind CSS with the `@tailwindcss/typography` plugin for rendered post content
 
 1. Create `content/posts/<slug>.md` with frontmatter (`title`, `brief`, `publishedAt`, `tags`, `coverImage`).
 2. Drop any referenced images into `public/posts/<slug>/` and link them from the markdown as `/posts/<slug>/<file>`.
+   For the cover, either set `coverImage` or add a photo at `public/covers/<slug>.jpg` (~1600px wide, freely licensed) and credit it in `src/lib/cover-credits.ts` (shown under the article hero).
 3. If any tag is new, add it to `src/lib/tag-categories.ts`'s `TAG_CATEGORY` map (it silently falls back to `'engineering'` otherwise).
 4. The listing page, detail route, sitemap, llms.txt, and `/api/feed.json` all pick the post up automatically — no other wiring needed.
 
