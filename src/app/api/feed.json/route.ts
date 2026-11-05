@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Posts } from '@/lib/posts'
 import { categoryFor } from '@/lib/tag-categories'
+import { BLOG_URL } from '@/constants'
 
 // Consumed server-side by hovanhoa.net's home page for its "blog bento"
 // preview — see src/app/page.tsx there. Not meant for browser/client fetches.
@@ -19,7 +20,12 @@ export async function GET(request: Request) {
             publishedAt: post.publishedAt,
             updatedAt: post.updatedAt,
             readTimeInMinutes: post.readTimeInMinutes,
-            coverImage: post.coverImage,
+            // absolute, since the consumer renders it from another origin
+            coverImage: {
+                url: post.coverImage.url.startsWith('/')
+                    ? `${BLOG_URL}${post.coverImage.url}`
+                    : post.coverImage.url,
+            },
             tags: post.tags.map((tag) => ({
                 name: tag.name,
                 category: categoryFor(tag.name),
@@ -29,6 +35,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
         { total, posts },
-        { headers: { 'Cache-Control': 's-maxage=3600, stale-while-revalidate' } }
+        {
+            headers: {
+                'Cache-Control': 's-maxage=3600, stale-while-revalidate',
+            },
+        }
     )
 }

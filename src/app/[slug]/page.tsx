@@ -1,9 +1,12 @@
-import Navbar from '@/components/nav'
+import Image from 'next/image'
+import Link from 'next/link'
 import { BLOG_URL, NAME, FULL_NAME } from '@/constants'
 import formatDate from '@/lib/format-date'
 import { type Tag, type Post } from '@/lib/types'
 import React from 'react'
-import { Footer } from '@/components/footer'
+import { PostList } from '@/components/post-row'
+import { SectionHead, sectionLink } from '@/components/section-head'
+import { TagPill } from '@/components/redesign/tag-pill'
 import NotFound from '@/app/not-found'
 import { Posts } from '@/lib/posts'
 import ArticleContent from '@/components/article-content'
@@ -28,7 +31,7 @@ export async function generateMetadata({
     }
 
     const ogImage =
-        post?.coverImage?.url ||
+        (post?.coverImage?.url?.startsWith('http') && post.coverImage.url) ||
         `${BLOG_URL}/api/og?title=${encodeURIComponent(`${NAME} | ${post.title.toLowerCase()}`)}`
 
     return {
@@ -74,11 +77,7 @@ export async function generateMetadata({
     }
 }
 
-export default async function Page({
-    params,
-}: {
-    params: { slug: string }
-}) {
+export default async function Page({ params }: { params: { slug: string } }) {
     const slug = params.slug
     const post: Post | null = Posts.getArticleBySlug(slug)
 
@@ -86,9 +85,13 @@ export default async function Page({
         return <NotFound />
     }
 
+    const morePosts = Posts.getAllSummaries()
+        .filter((p) => p.slug !== slug)
+        .slice(0, 3)
+
     return (
         <>
-            <main className="min-h-screen relative">
+            <main className="relative min-h-screen">
                 <script
                     type="application/ld+json"
                     suppressHydrationWarning
@@ -100,7 +103,9 @@ export default async function Page({
                             datePublished: post.publishedAt,
                             dateModified: post.publishedAt,
                             description: post.brief,
-                            image: post?.coverImage?.url,
+                            image: post.coverImage.url.startsWith('/')
+                                ? `${BLOG_URL}${post.coverImage.url}`
+                                : post.coverImage.url || undefined,
                             url: `${BLOG_URL}/${slug}`,
                             author: {
                                 '@type': 'Person',
@@ -110,27 +115,63 @@ export default async function Page({
                         }),
                     }}
                 />
-                <header className="sticky top-0 z-50 border-b border-[var(--rd-border-2)] bg-[var(--rd-bg-sub)] shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-                    <div className="mx-auto w-full max-w-[var(--rd-maxw)] px-[var(--rd-pad)] py-3">
-                        <Navbar />
-                    </div>
-                </header>
-                <section className="relative mx-auto max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pt-12">
-                    <div className="max-w-3xl">
-                        <h1 className="text-2xl font-bold tracking-tight text-[var(--rd-text)] sm:text-4xl">
+                <article className="mx-auto w-full max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-[clamp(48px,6vw,80px)] pt-[clamp(2.5rem,6vw,4.5rem)]">
+                    <header className="rd-rise max-w-[46rem]">
+                        <Link
+                            href="/"
+                            className={`${sectionLink} mb-[clamp(1.75rem,4vw,2.75rem)]`}
+                        >
+                            <span aria-hidden>←</span>
+                            All posts
+                        </Link>
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-[family-name:var(--font-mono)] text-[0.72rem] text-[var(--rd-text-3)]">
+                            <time dateTime={post.publishedAt}>
+                                {formatDate(post.publishedAt)}
+                            </time>
+                            <span aria-hidden>·</span>
+                            <span>{post.readTimeInMinutes} min read</span>
+                        </div>
+                        <h1 className="m-0 mt-3 text-balance font-[family-name:var(--font-display)] text-[clamp(2.1rem,4.5vw,3.4rem)] font-normal leading-[1.08] tracking-[-0.03em] text-[var(--rd-text)]">
                             {post.title}
                         </h1>
-                        <div className="mb-8 mt-3 flex flex-wrap items-center gap-x-2 font-[family-name:var(--font-mono)] text-xs text-[var(--rd-text-3)]">
-                            <span>{formatDate(post.publishedAt)}</span>
-                            <span>· {post.readTimeInMinutes} min read</span>
-                            {post.tags.map((tag: Tag) => (
-                                <span key={tag.name}>· {tag.name}</span>
-                            ))}
+                        {post.brief && (
+                            <p className="m-0 mt-4 max-w-[60ch] text-[clamp(1rem,1.4vw,1.15rem)] leading-[1.6] text-[var(--rd-text-2)]">
+                                {post.brief}
+                            </p>
+                        )}
+                        {post.tags.length > 0 && (
+                            <div className="mt-5 flex flex-wrap gap-1.5">
+                                {post.tags.map((tag: Tag) => (
+                                    <TagPill key={tag.name} name={tag.name} />
+                                ))}
+                            </div>
+                        )}
+                    </header>
+                    {post.coverImage.url && (
+                        <div className="relative mt-[clamp(1.75rem,3.5vw,2.5rem)] aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
+                            <Image
+                                src={post.coverImage.url}
+                                alt=""
+                                fill
+                                priority
+                                sizes="(min-width: 1120px) 1008px, 100vw"
+                                className="object-cover"
+                            />
                         </div>
+                    )}
+                    <div className="mt-[clamp(2rem,4vw,3rem)] max-w-[68ch] border-t border-[var(--rd-line)] pt-[clamp(1.5rem,3vw,2.25rem)]">
                         <ArticleContent content={post.content.html} />
                     </div>
-                </section>
-                <Footer />
+                </article>
+                {morePosts.length > 0 && (
+                    <section className="mx-auto max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-[clamp(56px,8vw,96px)]">
+                        <SectionHead
+                            title="Keep reading"
+                            links={[{ label: 'All posts', href: '/' }]}
+                        />
+                        <PostList posts={morePosts} />
+                    </section>
+                )}
             </main>
         </>
     )

@@ -5,7 +5,6 @@
 body {
     color: var(--rd-text);
     background-color: var(--rd-bg);
-    text-transform: lowercase !important;
 }
 
 /* ============================================================
@@ -14,17 +13,17 @@ body {
    ============================================================ */
 :root {
     /* neutrals (light) */
-    --rd-bg: #ffffff;
-    --rd-bg-sub: #fafafa;
+    --rd-bg: #f7f7f5;
+    --rd-bg-sub: #f0f0ed;
     --rd-surface: #ffffff;
-    --rd-surface-2: #f6f6f5;
-    --rd-border: #e8e8e6;
-    --rd-border-2: #dededc;
-    --rd-line: #ededeb;
+    --rd-surface-2: #f3f3f0;
+    --rd-border: #e4e4e0;
+    --rd-border-2: #d4d4cf;
+    --rd-line: #ebebe7;
     --rd-text: #0c0c0c;
-    --rd-text-2: #54534f;
-    --rd-text-3: #8c8b85;
-    --rd-text-4: #b6b5ae;
+    --rd-text-2: #5c5b56;
+    --rd-text-3: #8a8983;
+    --rd-text-4: #b3b2ab;
 
     /* accent (orange) */
     --rd-accent: #d8602f;
@@ -58,33 +57,42 @@ body {
     --rd-code-bg: #2d2d2d;
 
     /* shape */
-    --rd-r-sm: 7px;
-    --rd-r: 11px;
-    --rd-r-lg: 16px;
+    --rd-r-sm: 10px;
+    --rd-r: 16px;
+    --rd-r-lg: 24px;
 
     /* layout */
-    --rd-maxw: 1180px;
-    --rd-pad: clamp(20px, 5vw, 56px);
+    --rd-maxw: 1120px;
+    --rd-pad: clamp(24px, 5.5vw, 56px);
 
     /* fonts — mapped to Geist via the geist package */
-    --font-sans: var(--font-geist-sans), 'Inter', ui-sans-serif, system-ui,
-        sans-serif;
-    --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo,
-        monospace;
+    --font-sans:
+        var(--font-geist-sans), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono:
+        var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --rd-nav-h: 64px;
+    --font-display:
+        'Libertinus Serif', 'Noto Serif', Georgia, 'Times New Roman', serif;
+    --rd-label-plum: #f3e6ec;
+    --rd-label-plum-fg: #6b3a52;
+    --rd-label-pine: #e4f0e9;
+    --rd-label-pine-fg: #2d5a42;
+    --rd-label-slate: #e8eaf0;
+    --rd-label-slate-fg: #3d4458;
 }
 
 .dark {
     --rd-bg: #0a0a0a;
     --rd-bg-sub: #0e0e0e;
-    --rd-surface: #111111;
-    --rd-surface-2: #161616;
-    --rd-border: #242424;
+    --rd-surface: #141414;
+    --rd-surface-2: #1a1a1a;
+    --rd-border: #222222;
     --rd-border-2: #2e2e2e;
-    --rd-line: #1d1d1d;
-    --rd-text: #f4f3f1;
-    --rd-text-2: #a7a6a1;
-    --rd-text-3: #74736e;
-    --rd-text-4: #4a4a47;
+    --rd-line: #1c1c1c;
+    --rd-text: #f5f5f4;
+    --rd-text-2: #a1a1aa;
+    --rd-text-3: #71717a;
+    --rd-text-4: #3f3f46;
     --rd-accent: #f0743f;
     --rd-accent-ink: #f59568;
     --rd-accent-bg: #2a1810;
@@ -107,6 +115,12 @@ body {
     --rd-ok: #43c089;
     --rd-warn: #e0a93a;
     --rd-down: #f06464;
+    --rd-label-plum: #3d2433;
+    --rd-label-plum-fg: #e0b8c8;
+    --rd-label-pine: #1a3228;
+    --rd-label-pine-fg: #a8cbb8;
+    --rd-label-slate: #252836;
+    --rd-label-slate-fg: #b8bcc8;
 }
 
 /* ---------- typography ---------- */
@@ -124,12 +138,6 @@ body {
 }
 .rd-eyebrow .rd-num {
     color: var(--rd-accent);
-}
-
-.rd-h-sec {
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    letter-spacing: -0.035em;
-    font-weight: 600;
 }
 
 .rd-lead {
@@ -189,7 +197,7 @@ pre[class*='language-'] {
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    border-radius: 0.5em;
+    border-radius: var(--rd-r-sm);
     background: var(--rd-code-bg) !important;
 }
 
@@ -207,7 +215,7 @@ code[class*='language-'] {
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    border-radius: 0.5em;
+    border-radius: var(--rd-r-sm);
     background: var(--rd-code-bg) !important;
     color: #f8f8f2;
 }
@@ -221,10 +229,11 @@ code[class*='language-'] {
 }
 
 :not(pre) > code {
-    background: #f1f5f9;
-    padding: 0.2em 0.4em;
-    border-radius: 0.25em;
-    font-size: 0.875em;
+    background: var(--rd-surface-2);
+    border: 1px solid var(--rd-line);
+    padding: 0.12em 0.38em;
+    border-radius: 6px;
+    font-size: 0.86em;
 }
 
 .dark :not(pre) > code {
@@ -268,4 +277,138 @@ code[class*='language-'] {
     .rd-menu-in {
         animation: none;
     }
+}
+
+/* ---------- editorial layer (shared across the family) ---------- */
+html {
+    background-color: var(--rd-bg);
+    scrollbar-gutter: stable;
+}
+body {
+    background-color: var(--rd-bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.rd-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    font-size: clamp(2.35rem, 6.4vw, 4.15rem);
+    text-wrap: balance;
+}
+.rd-h-sec {
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 2.4vw, 1.75rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-weight: 400;
+}
+@keyframes rd-rise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+.rd-rise {
+    animation: rd-rise 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+    .rd-rise {
+        animation: none;
+    }
+}
+
+/* ---------- article prose (editorial) ---------- */
+/* Typography-plugin colour slots mapped onto the family tokens, so one rule
+   set covers both themes (no prose-invert needed). */
+.rd-prose {
+    --tw-prose-body: color-mix(in srgb, var(--rd-text) 84%, transparent);
+    --tw-prose-headings: var(--rd-text);
+    --tw-prose-lead: var(--rd-text-2);
+    --tw-prose-links: var(--rd-text);
+    --tw-prose-bold: var(--rd-text);
+    --tw-prose-counters: var(--rd-text-3);
+    --tw-prose-bullets: var(--rd-text-4);
+    --tw-prose-hr: var(--rd-line);
+    --tw-prose-quotes: var(--rd-text-2);
+    --tw-prose-quote-borders: var(--rd-border-2);
+    --tw-prose-captions: var(--rd-text-3);
+    --tw-prose-code: var(--rd-text);
+    --tw-prose-pre-code: #f8f8f2;
+    --tw-prose-pre-bg: var(--rd-code-bg);
+    --tw-prose-th-borders: var(--rd-border);
+    --tw-prose-td-borders: var(--rd-line);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+}
+.rd-prose :where(h1, h2, h3, h4):not(:where(.not-prose *)) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+.rd-prose :where(h1):not(:where(.not-prose *)) {
+    font-size: clamp(1.75rem, 3vw, 2.1rem);
+}
+.rd-prose :where(h2):not(:where(.not-prose *)) {
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+}
+.rd-prose :where(h3):not(:where(.not-prose *)) {
+    font-size: clamp(1.25rem, 2vw, 1.4rem);
+    margin-bottom: 0.5em;
+}
+.rd-prose :where(h4):not(:where(.not-prose *)) {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+}
+.rd-prose :where(a):not(:where(.not-prose *)) {
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(
+        in srgb,
+        var(--rd-accent) 45%,
+        transparent
+    );
+    text-underline-offset: 3px;
+    transition:
+        color 0.18s,
+        text-decoration-color 0.18s;
+}
+.rd-prose :where(a):not(:where(.not-prose *)):hover {
+    color: var(--rd-accent-ink);
+    text-decoration-color: var(--rd-accent);
+}
+.rd-prose :where(code):not(:where(pre *))::before,
+.rd-prose :where(code):not(:where(pre *))::after {
+    content: none;
+}
+.rd-prose :where(code):not(:where(pre *)) {
+    font-weight: 500;
+}
+.rd-prose :where(blockquote):not(:where(.not-prose *)) {
+    font-weight: 400;
+    font-style: normal;
+    border-left-width: 2px;
+}
+.rd-prose :where(blockquote p):not(:where(.not-prose *))::before,
+.rd-prose :where(blockquote p):not(:where(.not-prose *))::after {
+    content: none;
+}
+.rd-prose :where(img):not(:where(.not-prose *)) {
+    border-radius: var(--rd-r);
+    border: 1px solid var(--rd-border);
+}
+.rd-prose :where(pre):not(:where(.not-prose *)) {
+    font-size: 0.875rem;
 }
