@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import Navbar from '@/components/nav'
-import PostTile from '@/components/post-tile'
-import { Footer } from '@/components/footer'
-import { Eyebrow } from '@/components/redesign/eyebrow'
+import { FeaturedPost } from '@/components/featured-post'
+import { PostList } from '@/components/post-row'
+import { SectionHead, sectionLink } from '@/components/section-head'
 import { TagPill } from '@/components/redesign/tag-pill'
 import { Posts } from '@/lib/posts'
 import { type PostExcerpt } from '@/lib/types'
@@ -79,77 +78,83 @@ export default function BlogHome({
                 }}
             />
 
-            {/* ---- sticky header ---- */}
-            <header className="sticky top-0 z-50 border-b border-[var(--rd-border-2)] bg-[var(--rd-bg-sub)] shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-                <div className="mx-auto w-full max-w-[var(--rd-maxw)] px-[var(--rd-pad)] py-3">
-                    <Navbar />
-                </div>
-            </header>
-
-            {/* ---- header panel ---- */}
-            <div
-                className="border-b border-[var(--rd-border)]"
-                style={{
-                    background:
-                        'radial-gradient(100% 140% at 0% 0%, var(--rd-accent-bg), transparent 55%), var(--rd-surface-2)',
-                }}
-            >
-                <div className="mx-auto max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-12 pt-12">
-                    <Eyebrow>hovanhoa · blog</Eyebrow>
-                    <h1 className="mt-[18px] max-w-[22ch] text-[clamp(2rem,4.6vw,3.4rem)] font-semibold tracking-[-0.04em] text-[var(--rd-text)]">
-                        Writing.
-                    </h1>
-                    <p className="rd-lead mt-5">
-                        Notes on software engineering, distributed systems,
-                        and lessons from building things — with the
-                        occasional life update in between.
-                    </p>
-                    <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-[family-name:var(--font-mono)] text-xs text-[var(--rd-text-3)]">
-                        <span>{allPosts.length} posts</span>
-                        <span aria-hidden>·</span>
-                        <span>{allTags.length} tags</span>
+            {/* ---- page header ---- */}
+            <section className="mx-auto w-full max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-[clamp(2rem,4vw,3rem)] pt-[clamp(3.5rem,8vw,6.5rem)]">
+                <div className="rd-rise">
+                    <div className="flex items-baseline gap-3">
+                        <h1 className="m-0 font-[family-name:var(--font-display)] text-[clamp(2.1rem,4.5vw,3.4rem)] font-normal leading-[1.08] tracking-[-0.03em] text-[var(--rd-text)]">
+                            Writing
+                        </h1>
+                        <span className="font-[family-name:var(--font-mono)] text-base text-[var(--rd-text-3)]">
+                            {allPosts.length}
+                        </span>
                     </div>
+                    <p className="m-0 mt-4 max-w-[56ch] text-[clamp(0.98rem,1.25vw,1.0625rem)] leading-[1.65] text-[var(--rd-text-2)]">
+                        Notes on software engineering, distributed systems, and
+                        lessons from building things, with the occasional life
+                        update in between.
+                    </p>
                     <nav
-                        aria-label="filter by tag"
-                        className="mt-6 flex flex-wrap gap-2"
+                        aria-label="Filter by tag"
+                        className="mt-7 flex flex-wrap items-center gap-1.5"
                     >
+                        <span className="mr-1.5 font-[family-name:var(--font-mono)] text-[0.72rem] text-[var(--rd-text-3)]">
+                            {allTags.length} tags
+                        </span>
                         {allTags.map((tag) => (
-                            <TagPill key={tag} name={tag} activeTags={activeTags} />
+                            <TagPill
+                                key={tag}
+                                name={tag}
+                                activeTags={activeTags}
+                            />
                         ))}
                         {activeTags.length > 0 && (
                             <Link
                                 href="/"
-                                className="rd-chip hover:border-[var(--rd-accent)] hover:text-[var(--rd-accent-ink)]"
+                                className={`${sectionLink} ml-2 text-[0.8125rem]`}
                             >
-                                clear all ✕
+                                Clear filters
+                                <span aria-hidden>✕</span>
                             </Link>
                         )}
                     </nav>
                 </div>
-            </div>
+            </section>
 
-            {/* ---- body ---- */}
-            <div className="mx-auto max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-[clamp(56px,8vw,96px)] pt-[clamp(28px,4vw,44px)]">
-                {postsArr.length > 0 ? (
-                    postsArr.map((post) => (
-                        <PostTile
-                            key={post.id}
-                            post={post}
-                            activeTags={activeTags}
-                        />
-                    ))
-                ) : (
-                    <p className="font-[family-name:var(--font-mono)] text-sm text-[var(--rd-text-3)]">
-                        no posts tagged{' '}
+            {/* ---- post index ---- */}
+            <section className="mx-auto max-w-[var(--rd-maxw)] px-[var(--rd-pad)] pb-[clamp(56px,8vw,96px)] pt-[clamp(1rem,2vw,1.5rem)]">
+                {postsArr.length === 0 ? (
+                    <p className="m-0 font-[family-name:var(--font-mono)] text-[0.8125rem] text-[var(--rd-text-3)]">
+                        No posts tagged{' '}
                         <span className="text-[var(--rd-accent-ink)]">
                             {activeTags.map((t) => `#${t}`).join(' ')}
                         </span>{' '}
                         yet.
                     </p>
+                ) : activeSet.size ? (
+                    <>
+                        <SectionHead
+                            title={activeTags.map((t) => `#${t}`).join(' ')}
+                            meta={`${postsArr.length} of ${allPosts.length} posts`}
+                            links={[{ label: 'All posts', href: '/' }]}
+                        />
+                        <PostList posts={postsArr} activeTags={activeTags} />
+                    </>
+                ) : (
+                    <>
+                        <FeaturedPost post={postsArr[0]} />
+                        {postsArr.length > 1 && (
+                            <div className="mt-[clamp(48px,6vw,72px)]">
+                                <SectionHead
+                                    title="Archive"
+                                    meta={`${postsArr.length - 1} posts`}
+                                />
+                                <PostList posts={postsArr.slice(1)} />
+                            </div>
+                        )}
+                    </>
                 )}
-            </div>
-
-            <Footer />
+            </section>
         </main>
     )
 }
