@@ -6,6 +6,7 @@ import { BLOG_URL, FULL_NAME, IMAGE, NAME, ROLE, TWITTER } from '@/constants'
 import { Analytics } from '@vercel/analytics/react'
 import Navbar from '@/components/nav'
 import { Footer } from '@/components/footer'
+import ScrollReveal from '@/components/scroll-reveal'
 
 // serif display face for headings — non-blocking stylesheet; Geist itself
 // comes from next/font above
@@ -98,6 +99,7 @@ export default function RootLayout({
                 <Navbar />
                 {children}
                 <Footer />
+                <ScrollReveal />
             </body>
             <Analytics />
         </html>

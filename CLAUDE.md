@@ -27,7 +27,7 @@ All blog content lives in `content/posts/<slug>.md` and is parsed by `src/lib/po
 - `content/posts/` — Source-of-truth Markdown files for blog posts. Each `.md` has frontmatter (`title`, `brief`, `publishedAt`, `updatedAt`, `tags`, `coverImage`).
 - `public/posts/<slug>/` — Static assets (images) referenced by a post's markdown.
 - `src/app/` — Next.js App Router pages. `/` is the full post listing (with `?tag=` filtering). `[slug]/page.tsx` is the post detail route, prerendered via `generateStaticParams`. `/api/og` generates OG images; `/api/feed.json` is the JSON feed hovanhoa.net consumes.
-- `src/components/` — `featured-post.tsx` (latest-post card), `post-row.tsx` (hairline post rows + list card), `section-head.tsx` (serif section title + quiet links), `article-content.tsx` (post HTML + code-block copy buttons; prose styles live in `.rd-prose` in globals.css). `nav.tsx` / `footer.tsx` are rendered once in the root layout.
+- `src/components/` — `featured-post.tsx` (latest-post card), `post-row.tsx` (hairline post rows + list card), `section-head.tsx` (serif section title + quiet links), `article-content.tsx` (post HTML, code-block copy buttons, and the click-to-zoom image lightbox; prose styles live in `.rd-prose` in globals.css). `nav.tsx` / `footer.tsx` are rendered once in the root layout. `scroll-reveal.tsx` (also mounted once in the layout) fades `.rd-prose > *` and any `[data-reveal]` element up as it scrolls into view; first-screen content uses `.rd-rise` (+ `.rd-rise-d1/-d2` for stagger) instead.
 - `src/lib/` — `posts.ts` (Markdown loader), `tag-categories.ts` (tag → color-bucket map, **must be kept in sync by hand** whenever a post introduces a new tag), `tag-filter-url.ts` (the `?tag=` toggle logic).
 
 ### Styling

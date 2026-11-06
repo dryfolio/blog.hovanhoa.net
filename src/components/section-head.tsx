@@ -19,7 +19,10 @@ export function SectionHead({
     children?: ReactNode
 }) {
     return (
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div
+            data-reveal
+            className="mb-6 flex flex-wrap items-end justify-between gap-3"
+        >
             <div className="min-w-0">
                 <h2 className="rd-h-sec m-0 text-[var(--rd-text)]">{title}</h2>
                 {children}

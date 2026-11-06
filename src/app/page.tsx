@@ -142,7 +142,9 @@ export default function BlogHome({
                     </>
                 ) : (
                     <>
-                        <FeaturedPost post={postsArr[0]} />
+                        <div className="rd-rise rd-rise-d1">
+                            <FeaturedPost post={postsArr[0]} />
+                        </div>
                         {postsArr.length > 1 && (
                             <div className="mt-[clamp(48px,6vw,72px)]">
                                 <SectionHead
