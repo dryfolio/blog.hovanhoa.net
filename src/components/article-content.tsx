@@ -1,12 +1,11 @@
 'use client'
 
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useState } from 'react'
+import Lightbox, { type Zoomed } from '@/components/lightbox'
 
 interface ArticleContentProps {
     content: string
 }
-
-type Zoomed = { src: string; alt: string }
 
 // Memoized so lightbox state changes never re-render (and so reset) the
 // post HTML underneath it.
@@ -27,15 +26,7 @@ const Body = memo(function Body({
 })
 
 export default function ArticleContent({ content }: ArticleContentProps) {
-    const dialogRef = useRef<HTMLDialogElement>(null)
     const [zoomed, setZoomed] = useState<Zoomed | null>(null)
-
-    useEffect(() => {
-        const dialog = dialogRef.current
-        if (zoomed && dialog && !dialog.open) dialog.showModal()
-    }, [zoomed])
-
-    const close = useCallback(() => dialogRef.current?.close(), [])
 
     // Code blocks arrive pre-highlighted from the server (src/lib/highlight.ts);
     // the client only wires up their copy buttons and the image lightbox,
@@ -72,25 +63,7 @@ export default function ArticleContent({ content }: ArticleContentProps) {
     return (
         <>
             <Body html={content} onClick={onClick} />
-            <dialog
-                ref={dialogRef}
-                className="rd-lightbox"
-                aria-label={zoomed?.alt || 'Image'}
-                onClick={close}
-                onClose={() => setZoomed(null)}
-            >
-                {zoomed && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={zoomed.src} alt={zoomed.alt} />
-                )}
-                <button
-                    type="button"
-                    className="rd-lightbox-close"
-                    aria-label="Close image"
-                >
-                    esc
-                </button>
-            </dialog>
+            <Lightbox image={zoomed} onClose={() => setZoomed(null)} />
         </>
     )
 }

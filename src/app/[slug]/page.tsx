@@ -11,6 +11,7 @@ import { TagPill } from '@/components/redesign/tag-pill'
 import NotFound from '@/app/not-found'
 import { Posts } from '@/lib/posts'
 import ArticleContent from '@/components/article-content'
+import CoverImage from '@/components/cover-image'
 import { Metadata } from 'next'
 
 export function generateStaticParams() {
@@ -151,16 +152,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </header>
                     {post.coverImage.url && (
                         <figure className="rd-rise rd-rise-d1 m-0 mt-[clamp(1.75rem,3.5vw,2.5rem)]">
-                            <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
-                                <Image
-                                    src={post.coverImage.url}
-                                    alt=""
-                                    fill
-                                    priority
-                                    sizes="(min-width: 1120px) 1008px, 100vw"
-                                    className="object-cover"
-                                />
-                            </div>
+                            <CoverImage src={post.coverImage.url} alt="" />
                             {credit &&
                                 post.coverImage.url.startsWith('/covers/') && (
                                     <figcaption className="mt-2 font-[family-name:var(--font-mono)] text-[0.7rem] text-[var(--rd-text-3)]">
