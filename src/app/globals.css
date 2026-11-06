@@ -53,8 +53,18 @@ body {
     --rd-warn: #c98a16;
     --rd-down: #d23b3b;
 
-    /* code blocks — dark in both themes by design */
-    --rd-code-bg: #2d2d2d;
+    /* code — a lifted card + muted syntax hues from the label palette */
+    --rd-code-bg: #fbfbfa;
+    --rd-code-head: #f4f4f1;
+    --rd-code-fg: #2b2a27;
+    --rd-code-inline: #efefeb;
+    --rd-syn-comment: #9a998f;
+    --rd-syn-punct: #7a7972;
+    --rd-syn-keyword: #8a3f68;
+    --rd-syn-string: #2f6b4b;
+    --rd-syn-number: #a35a24;
+    --rd-syn-func: #3e5592;
+    --rd-syn-prop: #5d4e9c;
 
     /* shape */
     --rd-r-sm: 10px;
@@ -121,6 +131,17 @@ body {
     --rd-label-pine-fg: #a8cbb8;
     --rd-label-slate: #252836;
     --rd-label-slate-fg: #b8bcc8;
+    --rd-code-bg: #0f0f0f;
+    --rd-code-head: #131313;
+    --rd-code-fg: #e4e4e1;
+    --rd-code-inline: #1a1a1a;
+    --rd-syn-comment: #6b6b70;
+    --rd-syn-punct: #8e8e95;
+    --rd-syn-keyword: #e0a9c7;
+    --rd-syn-string: #9fd0ac;
+    --rd-syn-number: #e8b98a;
+    --rd-syn-func: #a9bbe6;
+    --rd-syn-prop: #c3b6e8;
 }
 
 /* ---------- typography ---------- */
@@ -188,57 +209,151 @@ body {
 
 /* ---------- article prose ---------- */
 .document {
-    @apply max-w-none prose-h3:mb-4 prose-h3:text-base prose-h3:leading-6 prose-sm prose prose-pre:text-base prose-slate prose-a:font-semibold prose-a:text-[var(--rd-accent)] hover:prose-a:text-[var(--rd-accent-ink)];
+    @apply max-w-none prose-h3:mb-4 prose-h3:text-base prose-h3:leading-6 prose-sm prose prose-slate prose-a:font-semibold prose-a:text-[var(--rd-accent)] hover:prose-a:text-[var(--rd-accent-ink)];
 }
 
-/* Code blocks are deliberately dark in BOTH themes (terminal reads dark);
-   the token pins that decision instead of a stray hex. */
-pre[class*='language-'] {
-    padding: 1em;
-    margin: 0.5em 0;
-    overflow: auto;
+/* ---------- code ----------
+   Fenced blocks are rendered server-side (src/lib/highlight.ts) as
+   figure.rd-code > figcaption + pre. They follow the theme like every other
+   surface: a hairline card with a quiet header, and a muted syntax palette
+   built from the tag-label hues so code sits in the page instead of
+   punching a dark hole in it. */
+.rd-code {
+    margin: 1.75em 0;
+    border: 1px solid var(--rd-border);
     border-radius: var(--rd-r-sm);
-    background: var(--rd-code-bg) !important;
+    background: var(--rd-code-bg);
+    overflow: hidden;
 }
-
-code[class*='language-'] {
-    background: transparent !important;
-    padding: 0 !important;
-    font-size: 0.875rem !important;
-    line-height: 1.7142857 !important;
+.rd-code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 34px;
+    padding: 0 0.5rem 0 0.95rem;
+    border-bottom: 1px solid var(--rd-line);
+    background: var(--rd-code-head);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rd-text-3);
 }
-
-/* Plain code fences (no language) get the same dark treatment, so a
-   pseudo-code block reads like the highlighted ones instead of washing
-   out to light-gray text on white. */
-.prose pre {
-    padding: 1em;
-    margin: 0.5em 0;
-    overflow: auto;
-    border-radius: var(--rd-r-sm);
-    background: var(--rd-code-bg) !important;
-    color: #f8f8f2;
-}
-
-.prose pre code {
-    background: transparent !important;
-    padding: 0 !important;
-    color: inherit;
-    font-size: 0.875rem;
-    line-height: 1.7142857;
-}
-
-:not(pre) > code {
-    background: var(--rd-surface-2);
-    border: 1px solid var(--rd-line);
-    padding: 0.12em 0.38em;
+.rd-code-copy {
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--rd-text-3);
+    padding: 0.2rem 0.5rem;
     border-radius: 6px;
-    font-size: 0.86em;
+    transition:
+        color 0.18s,
+        background 0.18s;
+}
+.rd-code-copy:hover {
+    color: var(--rd-text);
+    background: var(--rd-surface-2);
+}
+.rd-code-copy:focus-visible {
+    outline: 2px solid var(--rd-accent);
+    outline-offset: 1px;
+}
+.rd-code-copy[data-state='copied'] {
+    color: var(--rd-ok);
+}
+.rd-code pre {
+    margin: 0;
+    padding: 1rem 1.15rem 1.1rem;
+    overflow-x: auto;
+    background: transparent;
+    border-radius: 0;
+    color: var(--rd-code-fg);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    tab-size: 4;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rd-border-2) transparent;
+}
+.rd-code pre code {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    white-space: pre;
 }
 
-.dark :not(pre) > code {
-    background: var(--rd-surface-2);
+.rd-code .token.comment,
+.rd-code .token.prolog,
+.rd-code .token.doctype,
+.rd-code .token.cdata {
+    color: var(--rd-syn-comment);
+    font-style: italic;
+}
+.rd-code .token.punctuation {
+    color: var(--rd-syn-punct);
+}
+.rd-code .token.keyword,
+.rd-code .token.atrule,
+.rd-code .token.important,
+.rd-code .token.selector {
+    color: var(--rd-syn-keyword);
+}
+.rd-code .token.string,
+.rd-code .token.char,
+.rd-code .token.attr-value,
+.rd-code .token.regex,
+.rd-code .token.inserted {
+    color: var(--rd-syn-string);
+}
+.rd-code .token.number,
+.rd-code .token.boolean,
+.rd-code .token.constant,
+.rd-code .token.symbol,
+.rd-code .token.variable {
+    color: var(--rd-syn-number);
+}
+.rd-code .token.function,
+.rd-code .token.class-name,
+.rd-code .token.builtin {
+    color: var(--rd-syn-func);
+}
+.rd-code .token.property,
+.rd-code .token.attr-name,
+.rd-code .token.tag,
+.rd-code .token.parameter {
+    color: var(--rd-syn-prop);
+}
+.rd-code .token.operator,
+.rd-code .token.entity,
+.rd-code .token.url {
+    color: var(--rd-syn-punct);
+}
+.rd-code .token.deleted {
+    color: var(--rd-down);
+}
+.rd-code .token.bold,
+.rd-code .token.important {
+    font-weight: 600;
+}
+
+/* inline code: a quiet mono tint, not a box (the .rd-prose selector
+   outranks the typography plugin's own code weight/size) */
+:not(pre) > code,
+.rd-prose :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.84em;
+    font-weight: 450;
     color: var(--rd-text);
+    background: var(--rd-code-inline);
+    border: 1px solid var(--rd-line);
+    padding: 0.1em 0.36em;
+    border-radius: 5px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    overflow-wrap: anywhere;
 }
 
 /* ---------- grids ---------- */
@@ -340,7 +455,7 @@ body {
     --tw-prose-quote-borders: var(--rd-border-2);
     --tw-prose-captions: var(--rd-text-3);
     --tw-prose-code: var(--rd-text);
-    --tw-prose-pre-code: #f8f8f2;
+    --tw-prose-pre-code: var(--rd-code-fg);
     --tw-prose-pre-bg: var(--rd-code-bg);
     --tw-prose-th-borders: var(--rd-border);
     --tw-prose-td-borders: var(--rd-line);
@@ -393,9 +508,6 @@ body {
 .rd-prose :where(code):not(:where(pre *))::after {
     content: none;
 }
-.rd-prose :where(code):not(:where(pre *)) {
-    font-weight: 500;
-}
 .rd-prose :where(blockquote):not(:where(.not-prose *)) {
     font-weight: 400;
     font-style: normal;
@@ -408,7 +520,4 @@ body {
 .rd-prose :where(img):not(:where(.not-prose *)) {
     border-radius: var(--rd-r);
     border: 1px solid var(--rd-border);
-}
-.rd-prose :where(pre):not(:where(.not-prose *)) {
-    font-size: 0.875rem;
 }

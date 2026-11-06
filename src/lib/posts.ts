@@ -6,6 +6,7 @@ import matter from 'gray-matter'
 import { Marked, type Tokens } from 'marked'
 import GithubSlugger from 'github-slugger'
 
+import { renderCodeBlock } from './highlight'
 import type { Post, PostExcerpt, TableOfContent, Tag } from './types'
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
@@ -133,6 +134,9 @@ function renderMarkdown(body: string): string {
                 const inline = this.parser.parseInline(token.tokens)
                 const id = slugger.slug(token.text)
                 return `<h${token.depth} id="heading-${id}">${inline}</h${token.depth}>\n`
+            },
+            code(token: Tokens.Code) {
+                return renderCodeBlock(token.text, token.lang)
             },
         },
     })
