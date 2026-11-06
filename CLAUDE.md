@@ -27,12 +27,12 @@ All blog content lives in `content/posts/<slug>.md` and is parsed by `src/lib/po
 - `content/posts/` — Source-of-truth Markdown files for blog posts. Each `.md` has frontmatter (`title`, `brief`, `publishedAt`, `updatedAt`, `tags`, `coverImage`).
 - `public/posts/<slug>/` — Static assets (images) referenced by a post's markdown.
 - `src/app/` — Next.js App Router pages. `/` is the full post listing (with `?tag=` filtering). `[slug]/page.tsx` is the post detail route, prerendered via `generateStaticParams`. `/api/og` generates OG images; `/api/feed.json` is the JSON feed hovanhoa.net consumes.
-- `src/components/` — `featured-post.tsx` (latest-post card), `post-row.tsx` (hairline post rows + list card), `section-head.tsx` (serif section title + quiet links), `article-content.tsx` (Prism syntax highlighting; prose styles live in `.rd-prose` in globals.css). `nav.tsx` / `footer.tsx` are rendered once in the root layout.
+- `src/components/` — `featured-post.tsx` (latest-post card), `post-row.tsx` (hairline post rows + list card), `section-head.tsx` (serif section title + quiet links), `article-content.tsx` (post HTML + code-block copy buttons; prose styles live in `.rd-prose` in globals.css). `nav.tsx` / `footer.tsx` are rendered once in the root layout.
 - `src/lib/` — `posts.ts` (Markdown loader), `tag-categories.ts` (tag → color-bucket map, **must be kept in sync by hand** whenever a post introduces a new tag), `tag-filter-url.ts` (the `?tag=` toggle logic).
 
 ### Styling
 
-Tailwind CSS with the `@tailwindcss/typography` plugin for rendered post content. Prism.js handles client-side syntax highlighting via `article-content.tsx`. Prettier uses 4-space indentation and single quotes.
+Tailwind CSS with the `@tailwindcss/typography` plugin for rendered post content. Fenced code is highlighted with Prism at build time in `src/lib/highlight.ts` (add a language there by importing its `prismjs/components/prism-*` grammar); the `.rd-code` block and `--rd-syn-*` syntax colours live in globals.css. Prettier uses 4-space indentation and single quotes.
 
 ### Adding a Post
 
