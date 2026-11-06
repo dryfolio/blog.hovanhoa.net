@@ -150,7 +150,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         )}
                     </header>
                     {post.coverImage.url && (
-                        <figure className="m-0 mt-[clamp(1.75rem,3.5vw,2.5rem)]">
+                        <figure className="rd-rise rd-rise-d1 m-0 mt-[clamp(1.75rem,3.5vw,2.5rem)]">
                             <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--rd-r-lg)] border border-[var(--rd-border)] bg-[var(--rd-surface-2)]">
                                 <Image
                                     src={post.coverImage.url}
@@ -192,7 +192,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                                 )}
                         </figure>
                     )}
-                    <div className="mt-[clamp(2rem,4vw,3rem)] max-w-[68ch] border-t border-[var(--rd-line)] pt-[clamp(1.5rem,3vw,2.25rem)]">
+                    <div className="rd-rise rd-rise-d2 mt-[clamp(2rem,4vw,3rem)] max-w-[68ch] border-t border-[var(--rd-line)] pt-[clamp(1.5rem,3vw,2.25rem)]">
                         <ArticleContent content={post.content.html} />
                     </div>
                 </article>
