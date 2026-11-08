@@ -8,4 +8,12 @@ export type CoverCredit = {
     source: string
 }
 
-export const COVER_CREDITS: Record<string, CoverCredit> = {}
+export const COVER_CREDITS: Record<string, CoverCredit> = {
+    '2025-rewind': {
+        title: 'Nho Que river, Ha Giang',
+        author: 'Ryan Le',
+        license: 'Unsplash License, cropped',
+        licenseUrl: 'https://unsplash.com/license',
+        source: 'https://unsplash.com/photos/o7YAmt6QujI',
+    },
+}
