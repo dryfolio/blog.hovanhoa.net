@@ -19,8 +19,6 @@ I also compared myself to friends in many ways: money, career, relationships, ap
 
 At the same time, I ended a relationship with my best friend. It was a very special connection, and I once believed nobody could ever be that close to me again. Honestly, it was mostly my fault, and I could not keep my promise. At first, I could not accept it, but now, under another sky, I always hope you are happy.
 
-![](/posts/looking-back-at-2024/first-half.jpeg)
-
 I did not really do much to move on in those months. I worked, came home, and repeated the same routine. I stayed home, played video games, and did not know where to go in the evenings or on weekends.
 
 Compared to before, my life felt much quieter. In the past, I was often three to four times busier. I might not always know where to go, but I always knew who I would go with. Doing everything alone for too long made me feel more depressed than ever.
@@ -56,8 +54,6 @@ I learned a lot from Udemy and applied it to my work and coding. More importantl
 At the end of 2024, I sat down and made plans for 2025.
 
 As a man should, I would rather share results after I finish them or not share them at all.
-
-![](/posts/looking-back-at-2024/new-year.jpeg)
 
 I hope everyone gets better day by day, and me too.
 
