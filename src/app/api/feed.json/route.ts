@@ -5,9 +5,14 @@ import { BLOG_URL } from '@/constants'
 
 // Consumed server-side by hovanhoa.net's home page for its "blog bento"
 // preview — see src/app/page.tsx there. Not meant for browser/client fetches.
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url)
-    const limit = Number(searchParams.get('limit') ?? '5') || 5
+// Exported as a static file, so ?limit= is ignored and the latest
+// FEED_LIMIT posts are always returned.
+export const dynamic = 'force-static'
+
+const FEED_LIMIT = 5
+
+export async function GET() {
+    const limit = FEED_LIMIT
 
     const total = Posts.getAllSlugs().length
     const posts = Posts.getArticles({ page: 1, pageSize: limit }).map(
@@ -33,12 +38,5 @@ export async function GET(request: Request) {
         })
     )
 
-    return NextResponse.json(
-        { total, posts },
-        {
-            headers: {
-                'Cache-Control': 's-maxage=3600, stale-while-revalidate',
-            },
-        }
-    )
+    return NextResponse.json({ total, posts })
 }

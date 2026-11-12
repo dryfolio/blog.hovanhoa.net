@@ -14,9 +14,9 @@ npm run format-check  # Check formatting without modifying
 
 ## Architecture
 
-**Next.js 14 personal blog** using the App Router, TypeScript, and Tailwind CSS. Part of the `*.hovanhoa.net` family (same `--rd-*` design system as hovanhoa.net, book.hovanhoa.net, etc. — see `DESIGN.md` in the `hovanhoa.net` repo for the full system).
+**Next.js 14 personal blog** using the App Router, TypeScript, and Tailwind CSS, built as a static export (`output: 'export'` → `out/`) and served from Cloudflare Workers static assets (`wrangler.jsonc`; deploy with `npm run build && npx wrangler deploy`). Anything that needs a request at runtime (search params, `request.url`) won't build. Part of the `*.hovanhoa.net` family (same `--rd-*` design system as hovanhoa.net, book.hovanhoa.net, etc. — see `DESIGN.md` in the `hovanhoa.net` repo for the full system).
 
-This repo was split out of `hovanhoa.net` so the blog has its own subdomain, matching the rest of the family. `hovanhoa.net`'s home page fetches `GET /api/feed.json?limit=5` from this site to render its "latest writing" preview — don't break that response shape (`{ total, posts: [{ slug, title, brief, publishedAt, updatedAt, readTimeInMinutes, coverImage, tags: [{ name, category }] }] }`) without updating the consumer there too.
+This repo was split out of `hovanhoa.net` so the blog has its own subdomain, matching the rest of the family. `hovanhoa.net`'s home page fetches `GET /api/feed.json` (the latest 5 posts; the site is a static export, so `?limit=` is ignored) from this site to render its "latest writing" preview — don't break that response shape (`{ total, posts: [{ slug, title, brief, publishedAt, updatedAt, readTimeInMinutes, coverImage, tags: [{ name, category }] }] }`) without updating the consumer there too.
 
 ### Data Flow
 
@@ -26,7 +26,7 @@ All blog content lives in `content/posts/<slug>.md` and is parsed by `src/lib/po
 
 - `content/posts/` — Source-of-truth Markdown files for blog posts. Each `.md` has frontmatter (`title`, `brief`, `publishedAt`, `updatedAt`, `tags`, `coverImage`).
 - `public/posts/<slug>/` — Static assets (images) referenced by a post's markdown.
-- `src/app/` — Next.js App Router pages. `/` is the full post listing (with `?tag=` filtering). `[slug]/page.tsx` is the post detail route, prerendered via `generateStaticParams`. `/api/og` generates OG images; `/api/feed.json` is the JSON feed hovanhoa.net consumes.
+- `src/app/` — Next.js App Router pages. `/` is the full post listing; `?tag=` filtering happens client-side in `blog-index.tsx`. `[slug]/page.tsx` is the post detail route, prerendered via `generateStaticParams`. `/og/<slug>/image.png` is each post's OG image, rendered at build time; `/api/feed.json` is the JSON feed hovanhoa.net consumes.
 - `src/components/` — `featured-post.tsx` (latest-post card), `post-row.tsx` (hairline post rows + list card), `section-head.tsx` (serif section title + quiet links), `article-content.tsx` (post HTML, code-block copy buttons, and click-to-zoom for body images), `cover-image.tsx` (the post hero cover, also click-to-zoom), `lightbox.tsx` (the shared `<dialog>` lightbox both use; prose styles live in `.rd-prose` in globals.css). `nav.tsx` / `footer.tsx` are rendered once in the root layout. `scroll-reveal.tsx` (also mounted once in the layout) fades `.rd-prose > *` and any `[data-reveal]` element up as it scrolls into view; first-screen content uses `.rd-rise` (+ `.rd-rise-d1/-d2` for stagger) instead.
 - `src/lib/` — `posts.ts` (Markdown loader), `tag-categories.ts` (tag → color-bucket map, **must be kept in sync by hand** whenever a post introduces a new tag), `tag-filter-url.ts` (the `?tag=` toggle logic).
 
