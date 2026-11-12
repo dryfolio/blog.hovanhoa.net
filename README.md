@@ -8,7 +8,7 @@ Notes on backend systems, distributed systems, and shipping things that stay cal
 - Content: local Markdown files, no CMS
 - Deployment: Vercel
 
-hovanhoa.net's home page fetches `GET /api/feed.json?limit=5` from this site to render its "latest writing" preview — see `CLAUDE.md` for the response shape before changing it.
+hovanhoa.net's home page fetches `GET /api/feed.json` (the latest 5 posts; `?limit=` is ignored since the site is a static export) from this site to render its "latest writing" preview — see `CLAUDE.md` for the response shape before changing it.
 
 ## Running Locally
 

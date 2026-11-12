@@ -34,7 +34,7 @@ export async function generateMetadata({
 
     const ogImage =
         (post?.coverImage?.url?.startsWith('http') && post.coverImage.url) ||
-        `${BLOG_URL}/api/og?title=${encodeURIComponent(`${NAME} | ${post.title.toLowerCase()}`)}`
+        `${BLOG_URL}/og/${params.slug}/image.png`
 
     return {
         title: {
