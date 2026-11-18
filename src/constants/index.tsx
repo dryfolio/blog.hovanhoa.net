@@ -13,6 +13,7 @@ const MUSIC_URL = 'https://music.hovanhoa.net'
 const STATUS_URL = 'https://status.hovanhoa.net'
 const INFO_URL = 'https://info.hovanhoa.net'
 const BOOK_URL = 'https://book.hovanhoa.net'
+const MOVIE_URL = 'https://movie.hovanhoa.net'
 const GITHUB_URL = `https://github.com/${GITHUB}`
 const TWITTER_URL = `https://twitter.com/${TWITTER}`
 const LINKEDIN_URL = `https://linkedin.com/in/${LINKEDIN}`
@@ -33,6 +34,7 @@ export {
     STATUS_URL,
     INFO_URL,
     BOOK_URL,
+    MOVIE_URL,
     GITHUB_URL,
     TWITTER_URL,
     LINKEDIN_URL,
